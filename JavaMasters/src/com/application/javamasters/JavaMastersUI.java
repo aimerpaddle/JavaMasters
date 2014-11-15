@@ -9,13 +9,10 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @Theme("valo")
@@ -40,7 +37,6 @@ public class JavaMastersUI extends UI {
 		
 		Panel centerPanel = createCenterPanel();
 		pageLayout.addComponent(centerPanel, 1, 0, 2, 2);
-		
 	}
 	
 	private Panel createCenterPanel() 
