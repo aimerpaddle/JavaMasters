@@ -1,4 +1,4 @@
-package com.application.javamaster.components;
+package com.application.javamasters.components;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
