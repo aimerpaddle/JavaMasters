@@ -38,7 +38,6 @@ public class HelpfulLinks extends Panel{
 		linksLayout.addComponent(this.video);
 	}
 	
-	
 
 }
 
