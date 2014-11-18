@@ -1,5 +1,8 @@
 package com.application.javamasters;
 
+import java.util.Spliterator;
+import java.util.function.Consumer;
+
 import javax.servlet.annotation.WebServlet;
 
 import com.application.javamasters.components.NavigationMenu;
@@ -9,6 +12,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
