@@ -1,14 +1,20 @@
 package com.application.javamasters;
 
+import java.util.Spliterator;
+import java.util.function.Consumer;
+
 import javax.servlet.annotation.WebServlet;
 
 import com.application.javamasters.components.NavigationMenu;
+import com.application.javamasters.views.HelpfulLinks;
+import com.application.javamasters.views.Overview;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
@@ -37,6 +43,8 @@ public class JavaMastersUI extends UI {
 		pageLayout.addComponent(acc, 0, 0, 0, 1);
 		
 		Panel centerPanel = createCenterPanel();
+		centerPanel = new Overview("Topic", "Subtopic", "https://www.youtube.com/watch?v=0QBeosRSNYA");
+		//centerPanel = new HelpfulLinks("google.com", "yahoo.com", "youtube,com");
 		pageLayout.addComponent(centerPanel, 1, 0, 2, 2);
 	}
 	
