@@ -3,6 +3,7 @@ package com.application.javamasters;
 import javax.servlet.annotation.WebServlet;
 
 import com.application.javamasters.components.NavigationMenu;
+import com.application.javamasters.views.QuestionNavigation;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
