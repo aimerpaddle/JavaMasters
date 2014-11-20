@@ -3,15 +3,9 @@ package com.application.javamasters;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
-
-
-
-
 import javax.servlet.annotation.WebServlet;
 
 import com.application.javamasters.components.NavigationMenu;
-import com.application.javamasters.components.QuestionNavigation;
-import com.application.javamasters.business.DatabaseManager;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.FontAwesome;
@@ -32,11 +26,13 @@ public class JavaMastersUI extends UI {
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private int screenWidth = screenSize.width;
 	
+	
 	private static VerticalLayout mainLayout;
 	private static Panel centerPanel;
 	private static AbsoluteLayout problemLayout;
 	private static HorizontalLayout horizontalLayout;
 	private static Label title;
+	private static boolean centerContentIsALayout = false;
 
 	@WebServlet(value = "/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = JavaMastersUI.class)
@@ -57,6 +53,7 @@ public class JavaMastersUI extends UI {
 		horizontalLayout = createCenterLayout();
 		mainLayout.addComponent(horizontalLayout);
 		mainLayout.setExpandRatio(horizontalLayout, 1);
+		
 	}
 	
 	/**
@@ -95,7 +92,7 @@ public class JavaMastersUI extends UI {
 		Panel navContainer = createNavigation();
 		hLayout.addComponent(navContainer);
 		
-		centerPanel = createCenterPanel();
+		centerPanel = createCenterContentPanel();
 		hLayout.addComponent(centerPanel);
 		
 		return hLayout;
@@ -107,7 +104,7 @@ public class JavaMastersUI extends UI {
 	 * 
 	 * @return Panel with a Label
 	 */
-	private Panel createCenterPanel() 
+	private Panel createCenterContentPanel() 
 	{
 		Panel centerPanel = new Panel();
 		centerPanel.setSizeFull();
@@ -150,8 +147,10 @@ public class JavaMastersUI extends UI {
 	 */
 	public static void changePage(String mainTopic, String subTopic, String page)
 	{
-		//horizontalLayout.removeComponent(problemLayout);
-		horizontalLayout.removeComponent(centerPanel);
+		if (centerContentIsALayout)
+			horizontalLayout.removeComponent(problemLayout);
+		else
+			horizontalLayout.removeComponent(centerPanel);
 		switch (mainTopic)
 		{
 			case "Variables":
@@ -166,10 +165,12 @@ public class JavaMastersUI extends UI {
 //										"https://www.google.com/?gws_rd=ssl",
 //										"https://www.google.com/?gws_rd=ssl",
 //										"https://www.google.com/?gws_rd=ssl")););
+								centerContentIsALayout = false;
 								break;
 							case "Practice Problems":
 								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Practice Problems");
 								horizontalLayout.addComponent(problemLayout = new com.application.javamasters.views.PracticeProblem("", ""));
+								centerContentIsALayout = true;
 								
 								break;
 							case "Helpful Links":
@@ -178,10 +179,39 @@ public class JavaMastersUI extends UI {
 										"https://www.google.com/?gws_rd=ssl",
 										"https://www.google.com/?gws_rd=ssl",
 										"https://www.google.com/?gws_rd=ssl"));
+								centerContentIsALayout = false;
+
 								break;
 						}
 						break;
 					case "Int":
+						switch (page)
+						{
+							case "Overview":
+								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Helpful Links");	//This is just a test...
+//								horizontalLayout.addComponent(centerPanel = new com.application.javamasters.views.Overview(
+//										"https://www.google.com/?gws_rd=ssl",
+//										"https://www.google.com/?gws_rd=ssl",
+//										"https://www.google.com/?gws_rd=ssl")););
+								centerContentIsALayout = false;
+
+								break;
+							case "Practice Problems":
+								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Practice Problems");
+								horizontalLayout.addComponent(problemLayout = new com.application.javamasters.views.PracticeProblem("abc", "abc"));
+								centerContentIsALayout = true;
+
+								break;
+							case "Helpful Links":
+								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Helpful Links");	//This is just a test...
+								horizontalLayout.addComponent(centerPanel = new com.application.javamasters.views.HelpfulLinks(
+										"https://www.hotmail.com/",
+										"https://www.google.com/?gws_rd=ssl",
+										"https://www.google.com/?gws_rd=ssl"));
+								centerContentIsALayout = false;
+
+								break;
+						}
 						break;
 					case "Double / Float":
 						break;
