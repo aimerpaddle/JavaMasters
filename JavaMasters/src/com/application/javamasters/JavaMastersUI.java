@@ -6,10 +6,12 @@ import java.awt.Toolkit;
 
 
 
+
 import javax.servlet.annotation.WebServlet;
 
 import com.application.javamasters.components.NavigationMenu;
-import com.application.javamasters.views.QuestionNavigation;
+import com.application.javamasters.components.QuestionNavigation;
+import com.application.javamasters.business.DatabaseManager;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.FontAwesome;
@@ -32,6 +34,7 @@ public class JavaMastersUI extends UI {
 	
 	private static VerticalLayout mainLayout;
 	private static Panel centerPanel;
+	private static AbsoluteLayout problemLayout;
 	private static HorizontalLayout horizontalLayout;
 	private static Label title;
 
@@ -147,6 +150,7 @@ public class JavaMastersUI extends UI {
 	 */
 	public static void changePage(String mainTopic, String subTopic, String page)
 	{
+		//horizontalLayout.removeComponent(problemLayout);
 		horizontalLayout.removeComponent(centerPanel);
 		switch (mainTopic)
 		{
@@ -164,6 +168,9 @@ public class JavaMastersUI extends UI {
 //										"https://www.google.com/?gws_rd=ssl")););
 								break;
 							case "Practice Problems":
+								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Practice Problems");
+								horizontalLayout.addComponent(problemLayout = new com.application.javamasters.views.PracticeProblem("", ""));
+								
 								break;
 							case "Helpful Links":
 								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Helpful Links");	//This is just a test...

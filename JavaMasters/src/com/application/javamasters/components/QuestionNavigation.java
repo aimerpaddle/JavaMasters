@@ -1,4 +1,4 @@
-package com.application.javamasters.views;
+package com.application.javamasters.components;
 
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
