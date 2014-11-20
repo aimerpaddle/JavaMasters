@@ -178,6 +178,7 @@ public class JavaMastersUI extends UI {
 								horizontalLayout.addComponent(centerPanel = new com.application.javamasters.views.HelpfulLinks(
 										"https://www.google.com/?gws_rd=ssl",
 										"https://www.google.com/?gws_rd=ssl",
+										"https://www.google.com/?gws_rd=ssl",
 										"https://www.google.com/?gws_rd=ssl"));
 								centerContentIsALayout = false;
 
@@ -206,6 +207,7 @@ public class JavaMastersUI extends UI {
 								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Helpful Links");	//This is just a test...
 								horizontalLayout.addComponent(centerPanel = new com.application.javamasters.views.HelpfulLinks(
 										"https://www.hotmail.com/",
+										"https://www.google.com/?gws_rd=ssl",
 										"https://www.google.com/?gws_rd=ssl",
 										"https://www.google.com/?gws_rd=ssl"));
 								centerContentIsALayout = false;
