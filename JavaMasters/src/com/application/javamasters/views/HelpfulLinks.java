@@ -1,6 +1,7 @@
 package com.application.javamasters.views;
 
 import com.vaadin.server.ExternalResource;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Panel;
@@ -36,6 +37,27 @@ public class HelpfulLinks extends Panel{
 		linksLayout.addComponent(this.link1);
 		linksLayout.addComponent(this.link2);
 		linksLayout.addComponent(this.video);
+	
+		Embedded youtubeVideo = new Embedded(null, new ExternalResource(
+	            "https://www.youtube.com/v/M-pXDoe5a0E"));
+		youtubeVideo.setAlternateText("Sharknado");
+	    youtubeVideo.setMimeType("application/x-shockwave-flash");
+	    youtubeVideo.setParameter("allowFullScreen", "true");
+	    youtubeVideo.setWidth("320px");
+	    youtubeVideo.setHeight("265px");
+	    linksLayout.addComponent(createVideo("https://www.youtube.com/v/M-pXDoe5a0E", "Sharknado Trailer"));
+	}
+	
+	private Embedded createVideo(String url, String title) {
+		
+		Embedded youtubeVideo = new Embedded(null, new ExternalResource(url));
+		youtubeVideo.setAlternateText(title);
+	    youtubeVideo.setMimeType("application/x-shockwave-flash");
+	    youtubeVideo.setParameter("allowFullScreen", "true");
+	    youtubeVideo.setWidth("320px");
+	    youtubeVideo.setHeight("265px");
+	    
+		return youtubeVideo;
 	}
 	
 

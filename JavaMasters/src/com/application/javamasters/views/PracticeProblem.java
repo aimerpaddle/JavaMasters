@@ -1,9 +1,9 @@
 package com.application.javamasters.views;
 
+import com.application.javamasters.business.BusinessLogic;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
@@ -14,8 +14,10 @@ import com.vaadin.ui.Button.ClickListener;
 public class PracticeProblem extends AbsoluteLayout{
 	
 	private String hintText = null;
+	//BusinessLogic buslog = new BusinessLogic();
+	/*private SQLContainer problemContainer = new*/ 
 
-	public PracticeProblem(String subTopic, String mainTopic) {
+	public PracticeProblem() {
 
 		setWidth("800px");
 		setHeight("100%");
@@ -37,12 +39,7 @@ public class PracticeProblem extends AbsoluteLayout{
 
 		String hintText = "This is a test hint";
 		final Window win = new Window("Hint");
-		win.setCaption("testing the hint stuff");
-		win.setResizable(true);
-        win.setClosable(true);
-        win.setHeight(null);
-        win.center();
-        win.focus();
+
 		
 		final Button hint = new Button("Hint",
                 new ClickListener() {
@@ -122,7 +119,6 @@ public class PracticeProblem extends AbsoluteLayout{
 			questionLayout.addComponent(button);
 
 		}
-
 		return questionNavigation;
 	}
 }

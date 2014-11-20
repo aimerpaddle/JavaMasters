@@ -169,7 +169,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Practice Problems");
-								horizontalLayout.addComponent(problemLayout = new com.application.javamasters.views.PracticeProblem("", ""));
+								horizontalLayout.addComponent(problemLayout = new com.application.javamasters.views.PracticeProblem());
 								centerContentIsALayout = true;
 								
 								break;
@@ -198,7 +198,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Practice Problems");
-								horizontalLayout.addComponent(problemLayout = new com.application.javamasters.views.PracticeProblem("abc", "abc"));
+								horizontalLayout.addComponent(problemLayout = new com.application.javamasters.views.PracticeProblem());
 								centerContentIsALayout = true;
 
 								break;
