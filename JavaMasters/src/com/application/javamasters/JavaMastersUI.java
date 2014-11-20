@@ -26,6 +26,7 @@ public class JavaMastersUI extends UI {
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private int screenWidth = screenSize.width;
 	
+	
 	private static VerticalLayout mainLayout;
 	private static Panel centerPanel;
 	private static AbsoluteLayout problemLayout;
