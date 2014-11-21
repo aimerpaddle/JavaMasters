@@ -25,10 +25,7 @@ public class HelpfulLinks extends Panel{
 		this.link1 = new Link(link1, new ExternalResource(link1));
 		this.link2 = new Link(link2, new ExternalResource(link2));
 		this.video = new Link("Video Turorial", new ExternalResource(video));
-		
-//		link1.setTargetName("_blank");
-//		link2.setTargetName("_blank");
-
+	
 		
 		this.setContent(panelLayout);
 		panelLayout.addComponent(new Label("Helpful Links"));
@@ -59,7 +56,5 @@ public class HelpfulLinks extends Panel{
 	    
 		return youtubeVideo;
 	}
-	
-
 }
 
