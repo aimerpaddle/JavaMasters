@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import javax.servlet.annotation.WebServlet;
 
 import com.application.javamasters.components.NavigationMenu;
+import com.application.javamasters.views.*;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.FontAwesome;
@@ -25,7 +26,6 @@ public class JavaMastersUI extends UI {
 
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private int screenWidth = screenSize.width;
-	
 	
 	private static VerticalLayout mainLayout;
 	private static Panel centerPanel;
@@ -79,7 +79,9 @@ public class JavaMastersUI extends UI {
 	}
 	
 	/**
-	 * 
+	 * Method that returns the area that has the accordion menu
+	 * and the centerPanel which can contain Overview, Practice
+	 * Problems or helpful links.
 	 * 
 	 * @return 
 	 */
@@ -141,6 +143,10 @@ public class JavaMastersUI extends UI {
 	 * A method that changes the central panel to display information
 	 * about either Overview, Practice Problems, or Helpful Links.
 	 * 
+	 * Note that this version of changing pages is pretty much entirely
+	 * hard coded.  We eventually need to find a way to refactor this into
+	 * a method or class.
+	 * 
 	 * @param main topic
 	 * @param sub topic
 	 * @param Overview, Practice Problems, or Helpful Links
@@ -169,13 +175,20 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Practice Problems");
-								horizontalLayout.addComponent(problemLayout = new com.application.javamasters.views.PracticeProblem());
+								horizontalLayout.addComponent(problemLayout = new MultipleAnswers(
+										"Variables",	//Topic
+										"Variable Declaring / Instantiation",	//Subtopic
+										"2",	//QuestionID
+										"Which of the following are used for loops?",	//Question
+										"Hint... Hint",	//Hint text
+										//We will need another parameter for the checkBoxValues (The text next to the checkboxes.)
+										"1,2,3"));
 								centerContentIsALayout = true;
 								
 								break;
 							case "Helpful Links":
 								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Helpful Links");	//This is just a test...
-								horizontalLayout.addComponent(centerPanel = new com.application.javamasters.views.HelpfulLinks(
+								horizontalLayout.addComponent(centerPanel = new HelpfulLinks(
 										"https://www.google.com/?gws_rd=ssl",
 										"https://www.google.com/?gws_rd=ssl",
 										"https://www.google.com/?gws_rd=ssl"));
@@ -198,7 +211,13 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Practice Problems");
-								horizontalLayout.addComponent(problemLayout = new com.application.javamasters.views.PracticeProblem());
+								horizontalLayout.addComponent(problemLayout = new FillInTheBlank(
+										"Variables", 
+										"Int",
+										"3",
+										"White boards are usually ____.",
+										"Hint... Hint",
+										"White"));
 								centerContentIsALayout = true;
 
 								break;
@@ -212,6 +231,131 @@ public class JavaMastersUI extends UI {
 
 								break;
 						}
+						break;
+					case "Double / Float":
+						break;
+					case "String / Char":
+						break;
+					case "Boolean":
+						break;
+					case "Scanner":
+						break;
+				}
+				break;
+				
+			case "Control Statements 1":
+				switch (subTopic)
+				{
+					case "Selection Statements":
+						break;
+					case "Logic Operators":
+						break;
+					case "Increment / Decrement":
+						break;
+				}
+				break;
+				
+			case "Control Statements 2":
+				switch (subTopic)
+				{
+					case "For Loop":
+						break;
+					case "While / Do While":
+						break;
+					case "For Each Loop":
+						break;
+				}
+				break;
+				
+			case "Methods and Classes":
+				switch (subTopic)
+				{
+					case "Classes - Declare/Create/Access":
+						break;
+					case "Methods":
+						break;
+					case "Getters / Setters":
+						break;
+					case "Constructors":
+						break;
+				}
+				break;
+				
+			case "Arrays":
+				switch (subTopic)
+				{
+					case "Passing Arrays as Arguments":
+						break;
+					case "Methods":
+						break;
+					case "Class Array":
+						break;
+					case "Array List <E>":
+						break;
+				}
+				break;
+			
+		}
+	}
+	
+	/**
+	 * Changes the question depending on which question button the user clicks.
+	 * 
+	 * Again, this feature is pretty much entirely hard coded.  We eventually
+	 * need a way to refactor this into a better method or class.
+	 * 
+	 * @param mainTopic
+	 * @param subTopic
+	 * @param What question number is it
+	 * @param Question text 
+	 * @param hint 
+	 * @param solution text
+	 * @param What type of question is it? (MultipleChoice, FillInTheBlank, or MultipleAnswer)
+	 */
+	public static void changeProblemType(
+			String mainTopic,
+			String subTopic,
+			String questionChallengeID,
+			String question,
+			String hint,
+			String solution,
+			String questionTypeID)
+	{
+		PracticeProblem temp = null;
+		switch (questionTypeID)
+		{
+			case "1":
+//				temp = new MultipleChoice();
+				break;
+			case "2":
+				temp = new MultipleAnswers(
+						mainTopic,
+						subTopic,
+						questionChallengeID,
+						question,
+						hint,
+						solution);
+				break;
+			case "3":
+				temp = new FillInTheBlank(
+						mainTopic,
+						subTopic,
+						questionChallengeID,
+						question,
+						hint,
+						solution);
+				break;
+		}
+		horizontalLayout.removeComponent(problemLayout);
+		switch (mainTopic)
+		{
+			case "Variables":
+				switch (subTopic)
+				{
+					case "Variable Declaring / Instantiation":
+						horizontalLayout.addComponent(problemLayout = temp);
+						break;
+					case "Int":
 						break;
 					case "Double / Float":
 						break;

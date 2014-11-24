@@ -16,10 +16,8 @@ import com.vaadin.ui.MenuBar.MenuItem;
 
 
 @SuppressWarnings("serial")
-@Theme("valo")
 public class NavigationMenu extends Accordion
 {	
-	@VaadinServletConfiguration(productionMode = false, ui = com.application.javamasters.JavaMastersUI.class)
 	public static class Servlet extends VaadinServlet {
 	}
 	

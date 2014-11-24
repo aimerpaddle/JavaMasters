@@ -29,16 +29,22 @@ public class FillInTheBlank extends PracticeProblem {
 	 * @param This problems subTopic
 	 * @param What question number (1, 2, 3, 4, or 5) this question is
 	 */
-	public FillInTheBlank(String mainTopic, String subTopic, String questionID)
-	{
+	public FillInTheBlank(
+			String mainTopic,
+			String subTopic,
+			String questionChallengeID,
+			String question,
+			String hintText,
+			String solution){
+		
 		Panel questionContent = createQuestionContent();
 		
 		//This line will have the arguments changed with calls to the database.
-		Panel questionPanel = createQuestion("3", "What kind of somethin or other is a _______ when blah blah.");
+		Panel questionPanel = createQuestion(questionChallengeID, question);
 		//This line will have the arguments changed with calls to the database.
-		Button hint = createHintButton("Hint goes here!");
+		Button hint = createHintButton(hintText);
 		//This line will have the arguments changed with calls to the database.
-		Button submit = createSubmitButton("Solution");
+		Button submit = createSubmitButton(solution);
 
 		addComponent(questionPanel, "left: 0px; top: 0px;");
 		addComponent(questionContent, "left: 0px; top: 160px;");
@@ -113,9 +119,16 @@ public class FillInTheBlank extends PracticeProblem {
 		}
 	}
 	
-	private Panel createQuestion(String questionNumber, String questionText) {
+	/**
+	 * Creates the panel and the text for the problem type.
+	 * 
+	 * @param Either question number 1,2,3,4, or 5
+	 * @param The text for the question
+	 * @return formatted Panel
+	 */
+	private Panel createQuestion(String questionChallengeID, String questionText) {
 
-		Panel questionPanel = new Panel("Question " + questionNumber);
+		Panel questionPanel = new Panel("Question " + 5);
 		questionPanel.setIcon(FontAwesome.QUESTION);
 		questionPanel.setWidth("600px");
 		questionPanel.setHeight("150px");
@@ -127,6 +140,13 @@ public class FillInTheBlank extends PracticeProblem {
 		return questionPanel;
 	}
 	
+	/**
+	 * Creates a hint button that the student can click.  When
+	 * clicked, it will show a hint in a window.
+	 * 
+	 * @param Text to go inside the hint.
+	 * @return Hint Button
+	 */
 	private Button createHintButton(final String hintText) {
 
 		final Window win = new Window("Hint");
