@@ -63,7 +63,7 @@ public class MultipleChoice extends PracticeProblem{
 	
 	private void validateUserAnswer(String solution)
 	{
-		//The window stuff is just to visually test if I am correctly getting the textField text
+		//The window stuff is just to visually test if I am correctly getting the radioButton text
 		// and correctly comparing them.
 		Window responseWindow = new Window();
 
