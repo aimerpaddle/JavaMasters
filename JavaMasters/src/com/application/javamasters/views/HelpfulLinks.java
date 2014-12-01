@@ -1,5 +1,6 @@
 package com.application.javamasters.views;
 
+import com.application.javamasters.business.BusinessLogic;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
@@ -25,7 +26,12 @@ public class HelpfulLinks extends Panel{
 	private Link video2;
 	
 	public HelpfulLinks(String link1, String link2, String videoUrl1, String videoUrl2) {
+		
+		
 		super();
+		
+		BusinessLogic buslog = new BusinessLogic();
+
 		this.link1 = new Link(link1, new ExternalResource(link1));
 		this.link2 = new Link(link2, new ExternalResource(link2));
 		this.video1 = new Link("Video Turorial 1", new ExternalResource(videoUrl1));
@@ -37,7 +43,9 @@ public class HelpfulLinks extends Panel{
 		this.video2.setTargetName("_blank");
 		
 		this.setContent(panelLayout);
-		panelLayout.addComponent(new Label("Helpful Links"));
+		//panelLayout.addComponent(new Label(buslog.getChallengeId(32, "Question1")));
+		panelLayout.addComponent(new Label(buslog.getQuestionText(4)));
+		//panelLayout.addComponent(new Label("Helpful Links"));
 		panelLayout.addComponent(linksPanel);
 		linksPanel.setContent(linksLayout);
 		linksLayout.addComponent(this.link1);
@@ -47,6 +55,8 @@ public class HelpfulLinks extends Panel{
 	
 		panelLayout.addComponent(videoPanel);
 		videoPanel.setContent(videoLayout);
+		
+		
 		
 //		Embedded youtubeVideo = new Embedded(null, new ExternalResource(
 //	            "https://www.youtube.com/v/M-pXDoe5a0E"));

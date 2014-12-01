@@ -167,10 +167,10 @@ public class JavaMastersUI extends UI {
 						{
 							case "Overview":
 								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Helpful Links");	//This is just a test...
-//								horizontalLayout.addComponent(centerPanel = new com.application.javamasters.views.Overview(
-//										"https://www.google.com/?gws_rd=ssl",
-//										"https://www.google.com/?gws_rd=ssl",
-//										"https://www.google.com/?gws_rd=ssl")););
+								horizontalLayout.addComponent(centerPanel = new com.application.javamasters.views.Overview(
+										"https://www.google.com/?gws_rd=ssl",
+										"https://www.google.com/?gws_rd=ssl",
+										"https://www.google.com/?gws_rd=ssl"));
 								centerContentIsALayout = false;
 								break;
 							case "Practice Problems":

@@ -39,6 +39,7 @@ public class QuestionNavigation extends Panel{
 								"Hint... Hint",
 								"1,2,3",
 								"2");
+						//JavaMastersUI.changeProblemType(mainTopic, subTopic, questionChallengeID, question, hint, solution, questionTypeID);
 					}
 				});
 		Button question2 = new Button("Question 2", 

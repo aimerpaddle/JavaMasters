@@ -1,5 +1,6 @@
 package com.application.javamasters.views;
 
+import com.application.javamasters.business.BusinessLogic;
 import com.application.javamasters.components.QuestionNavigation;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.AbsoluteLayout;
@@ -14,15 +15,18 @@ public class PracticeProblem extends AbsoluteLayout{
 	
 	private String hintText;
 	private String solution;
-	//BusinessLogic buslog = new BusinessLogic();
-	/*private SQLContainer problemContainer = new*/ 
 
 	public PracticeProblem() {
+
 
 		setWidth("800px");
 		setHeight("100%");
 		
-		Panel questionPanel = createQuestion(); 	
+		BusinessLogic buslog = new BusinessLogic();
+
+		//Panel questionPanel = createQuestion("Test");
+		Panel questionPanel = createQuestion(buslog.getQuestion(4));
+		//Panel questionPanel = createQuestion(buslog.getQuestionText(4)); 	
 		Panel questionContent = createQuestionContent();
 		Panel questionNavigation = new QuestionNavigation();
 		Button hint = createHintButton();
@@ -32,7 +36,7 @@ public class PracticeProblem extends AbsoluteLayout{
 		addComponent(questionContent, "left: 0px; top: 160px;");
 		addComponent(hint, "right: 300px; top: 570px;");
 		addComponent(submit, "right: 200px; top: 570px;");
-		addComponent(questionNavigation, "right: 0px; top: 0px");
+		addComponent(questionNavigation, "right: 0px; top: 0px;");
 	}
 	
 	private Button createHintButton() {
@@ -76,14 +80,14 @@ public class PracticeProblem extends AbsoluteLayout{
 	private void validateUserAnswer(String solution){
 	}
 
-	private Panel createQuestion() {
+	private Panel createQuestion(String questionText) {
 
 		Panel questionPanel = new Panel("Example Question 1");
 		questionPanel.setIcon(FontAwesome.QUESTION);
 		questionPanel.setWidth("600px");
 		questionPanel.setHeight("150px");
 
-		Label question = new Label("Is this a test question?");
+		Label question = new Label(questionText);
 		question.addStyleName("huge");
 		questionPanel.setContent(question);
 
