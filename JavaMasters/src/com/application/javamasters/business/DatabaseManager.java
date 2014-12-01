@@ -19,7 +19,7 @@ public class DatabaseManager {
 
 	public DatabaseManager() {
 		initConnectionPool();
-		initContainers();
+		//initContainers();
 	}
 
 	/*
@@ -30,8 +30,8 @@ public class DatabaseManager {
 		try {
 			connectionPool = new SimpleJDBCConnectionPool(
 					"com.mysql.jdbc.Driver",
-					"jdbc:mysql://aimerpaddle.com:3306/javamaster", "testing",
-					"Test1234", 2, 5);
+					"jdbc:mysql://localhost:3306/javamaster", "root",
+					"lak3rs24", 2, 5);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

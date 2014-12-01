@@ -8,8 +8,8 @@ public class BusinessLogic {
 	private DatabaseManager dbManager = new DatabaseManager();
 	private SQLContainer challengeContainer = dbManager.getChallengeContainer();
 	private SQLContainer subTopicContainer = dbManager.getSubTopicContainer();
-	private SQLContainer helpfulLinksContainer = dbManager.getHelpfulLinksContainer();
-	private SQLContainer overviewContainer = dbManager.getOverviewContainer();
+	//private SQLContainer helpfulLinksContainer = dbManager.getHelpfulLinksContainer();
+	//private SQLContainer overviewContainer = dbManager.getOverviewContainer();
 
 	public BusinessLogic(){
 		
@@ -48,11 +48,11 @@ public class BusinessLogic {
 //		
 //		
 //	}
-	public String getHelpfulLinksContent(int helpfulLinkId) {
-		
-		Object challengeItemId = helpfulLinksContainer.getIdByIndex(helpfulLinkId);
-		return helpfulLinksContainer.getItem(challengeItemId).getItemProperty("CONTENT")
-				.getValue().toString();
-	}
+//	public String getHelpfulLinksContent(int helpfulLinkId) {
+//		
+//		Object challengeItemId = helpfulLinksContainer.getIdByIndex(helpfulLinkId);
+//		return helpfulLinksContainer.getItem(challengeItemId).getItemProperty("CONTENT")
+//				.getValue().toString();
+//	}
 	
 }

@@ -21,7 +21,7 @@ public class Overview extends Panel{
 	public Overview(String topic, String subtopic, String video) {
 		super();
 
-		this.video = new Link("Video Turorial", new ExternalResource(video));
+		this.video = new Link("Video Tutorial", new ExternalResource(video));
 		
 		this.setContent(panelLayout);
 		panelLayout.addComponent(new Label("Overview"));
