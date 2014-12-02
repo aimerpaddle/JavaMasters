@@ -31,14 +31,7 @@ public class QuestionNavigation extends Panel{
 					@Override
 					public void buttonClick(ClickEvent event) {
 						//This method call will have its arguments replaced by database calls.
-						JavaMastersUI.changeProblemType(
-								"Variables",
-								"Variable Declaring / Instantiation",
-								"2",
-								"Which of the following are used for loops?",
-								"Hint... Hint",
-								"1,2,3",
-								"2");
+						JavaMastersUI.changeProblemType("Logic Operators", "Question 1");
 						//JavaMastersUI.changeProblemType(mainTopic, subTopic, questionChallengeID, question, hint, solution, questionTypeID);
 					}
 				});
@@ -48,14 +41,7 @@ public class QuestionNavigation extends Panel{
 				@Override
 				public void buttonClick(ClickEvent event) {
 					//This method call will have its arguments replaced by database calls.
-					JavaMastersUI.changeProblemType(
-							"Variables",
-							"Variable Declaring / Instantiation",
-							"3",
-							"You did it, You switch problems.  But can you switch some more?",
-							"These are hints",
-							"1,4,5",
-							"3");
+					JavaMastersUI.changeProblemType("Logic Operators", "Question 2");
 				}
 			});
 		Button question3 = new Button("Question 3");

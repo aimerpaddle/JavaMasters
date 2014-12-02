@@ -13,6 +13,10 @@ import com.vaadin.ui.Button.ClickListener;
 
 public class PracticeProblem extends AbsoluteLayout{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String hintText;
 	private String solution;
 

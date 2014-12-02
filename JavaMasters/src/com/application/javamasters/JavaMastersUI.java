@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 
 import javax.servlet.annotation.WebServlet;
 
+import com.application.javamasters.business.BusinessLogic;
 import com.application.javamasters.components.NavigationMenu;
 import com.application.javamasters.views.*;
 import com.vaadin.annotations.Theme;
@@ -29,10 +30,12 @@ public class JavaMastersUI extends UI {
 	
 	private static VerticalLayout mainLayout;
 	private static Panel centerPanel;
+	private static AbsoluteLayout contentLayout;
 	private static AbsoluteLayout problemLayout;
 	private static HorizontalLayout horizontalLayout;
 	private static Label title;
 	private static boolean centerContentIsALayout = false;
+	private static boolean hLayoutIsSet = false;
 
 	@WebServlet(value = "/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = JavaMastersUI.class)
@@ -96,7 +99,7 @@ public class JavaMastersUI extends UI {
 		
 		centerPanel = createCenterContentPanel();
 		hLayout.addComponent(centerPanel);
-		
+		hLayoutIsSet = true;
 		return hLayout;
 	}
 	
@@ -153,8 +156,10 @@ public class JavaMastersUI extends UI {
 	 */
 	public static void changePage(String mainTopic, String subTopic, String page)
 	{
+		if (hLayoutIsSet)
+			horizontalLayout.removeComponent(centerPanel);
 		if (centerContentIsALayout)
-			horizontalLayout.removeComponent(problemLayout);
+			horizontalLayout.removeComponent(contentLayout);
 		else
 			horizontalLayout.removeComponent(centerPanel);
 		switch (mainTopic)
@@ -166,34 +171,23 @@ public class JavaMastersUI extends UI {
 						switch (page)
 						{
 							case "Overview":
-								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Helpful Links");	//This is just a test...
-								horizontalLayout.addComponent(centerPanel = new com.application.javamasters.views.Overview(
-										"https://www.google.com/?gws_rd=ssl",
-										"https://www.google.com/?gws_rd=ssl",
-										"https://www.google.com/?gws_rd=ssl"));
-								centerContentIsALayout = false;
+								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Overview");	//This is just a test...
+								horizontalLayout.addComponent( contentLayout = new com.application.javamasters.views.Overview("Logic Operators"));
+								centerContentIsALayout = true;
 								break;
 							case "Practice Problems":
 								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Practice Problems");
-								horizontalLayout.addComponent(problemLayout = new MultipleAnswers(
-										"Variables",	//Topic
-										"Variable Declaring / Instantiation",	//Subtopic
-										"2",	//QuestionID
-										"Which of the following are used for loops?",	//Question
-										"Hint... Hint",	//Hint text
-										//We will need another parameter for the checkBoxValues (The text next to the checkboxes.)
-										"1,2,3"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Logic Operators", "Question 2"));
+										
 								centerContentIsALayout = true;
 								
 								break;
+								
 							case "Helpful Links":
 								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Helpful Links");	//This is just a test...
-								horizontalLayout.addComponent(centerPanel = new HelpfulLinks(
-										"https://www.google.com/?gws_rd=ssl",
-										"https://www.google.com/?gws_rd=ssl",
-										"https://www.google.com/?gws_rd=ssl",
-										"https://www.google.com/?gws_rd=ssl"));
-								centerContentIsALayout = false;
+								horizontalLayout.addComponent(contentLayout = new com.application.javamasters.views.HelpfulLinks("Logic Operators"));
+										
+								centerContentIsALayout = true;
 
 								break;
 						}
@@ -207,7 +201,7 @@ public class JavaMastersUI extends UI {
 //										"https://www.google.com/?gws_rd=ssl",
 //										"https://www.google.com/?gws_rd=ssl",
 //										"https://www.google.com/?gws_rd=ssl")););
-								centerContentIsALayout = false;
+								centerContentIsALayout = true;
 
 								break;
 							case "Practice Problems":
@@ -224,12 +218,8 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Helpful Links":
 								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Helpful Links");	//This is just a test...
-								horizontalLayout.addComponent(centerPanel = new com.application.javamasters.views.HelpfulLinks(
-										"https://www.hotmail.com/",
-										"https://www.google.com/?gws_rd=ssl",
-										"https://www.google.com/?gws_rd=ssl",
-										"https://www.google.com/?gws_rd=ssl"));
-								centerContentIsALayout = false;
+								horizontalLayout.addComponent(contentLayout = new com.application.javamasters.views.HelpfulLinks("Logic Operators"));
+								centerContentIsALayout = true;
 
 								break;
 						}
@@ -287,12 +277,16 @@ public class JavaMastersUI extends UI {
 				switch (subTopic)
 				{
 					case "Passing Arrays as Arguments":
+											
 						break;
 					case "Methods":
+						
 						break;
 					case "Class Array":
+						
 						break;
 					case "Array List <E>":
+						
 						break;
 				}
 				break;
@@ -314,114 +308,36 @@ public class JavaMastersUI extends UI {
 	 * @param solution text
 	 * @param What type of question is it? (MultipleChoice, FillInTheBlank, or MultipleAnswer)
 	 */
-	public static void changeProblemType(
-			String mainTopic,
-			String subTopic,
-			String questionChallengeID,
-			String question,
-			String hint,
-			String solution,
-			String questionTypeID)
-	{
+	public static void changeProblemType(String subTopic, String questionNum){
+
+		BusinessLogic bl = new BusinessLogic();
+		
+		int subtopicID = bl.getSubtopicID(subTopic);
+		int challengeID = bl.getChallengeId(subtopicID, questionNum);
+		
+		int questionTypeID = bl.getChallengeTypeID(challengeID);
 		PracticeProblem temp = null;
 		switch (questionTypeID)
 		{
-			case "1":
+			case 1:
 //				temp = new MultipleChoice();
 				break;
-			case "2":
-				temp = new MultipleAnswers(
-						mainTopic,
-						subTopic,
-						questionChallengeID,
-						question,
-						hint,
-						solution);
+			case 2:
+				temp = new MultipleAnswers(subTopic, questionNum);
+						
 				break;
-			case "3":
-				temp = new FillInTheBlank(
-						mainTopic,
-						subTopic,
-						questionChallengeID,
-						question,
-						hint,
-						solution);
+			case 3:
+//				temp = new FillInTheBlank(
+//						mainTopic,
+//						subTopic,
+//						questionChallengeID,
+//						question,
+//						hint,
+//						solution);
 				break;
 		}
 		horizontalLayout.removeComponent(problemLayout);
-		switch (mainTopic)
-		{
-			case "Variables":
-				switch (subTopic)
-				{
-					case "Variable Declaring / Instantiation":
-						horizontalLayout.addComponent(problemLayout = temp);
-						break;
-					case "Int":
-						break;
-					case "Double / Float":
-						break;
-					case "String / Char":
-						break;
-					case "Boolean":
-						break;
-					case "Scanner":
-						break;
-				}
-				break;
-				
-			case "Control Statements 1":
-				switch (subTopic)
-				{
-					case "Selection Statements":
-						break;
-					case "Logic Operators":
-						break;
-					case "Increment / Decrement":
-						break;
-				}
-				break;
-				
-			case "Control Statements 2":
-				switch (subTopic)
-				{
-					case "For Loop":
-						break;
-					case "While / Do While":
-						break;
-					case "For Each Loop":
-						break;
-				}
-				break;
-				
-			case "Methods and Classes":
-				switch (subTopic)
-				{
-					case "Classes - Declare/Create/Access":
-						break;
-					case "Methods":
-						break;
-					case "Getters / Setters":
-						break;
-					case "Constructors":
-						break;
-				}
-				break;
-				
-			case "Arrays":
-				switch (subTopic)
-				{
-					case "Passing Arrays as Arguments":
-						break;
-					case "Methods":
-						break;
-					case "Class Array":
-						break;
-					case "Array List <E>":
-						break;
-				}
-				break;
-			
-		}
+		horizontalLayout.addComponent(temp);
+		
 	}
 }

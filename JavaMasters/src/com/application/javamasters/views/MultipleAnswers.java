@@ -1,9 +1,16 @@
 package com.application.javamasters.views;
 
+import java.util.ArrayList;
+
+import com.application.javamasters.business.BusinessLogic;
+import com.vaadin.annotations.Theme;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
+import com.vaadin.shared.Position;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -25,35 +32,21 @@ public class MultipleAnswers extends PracticeProblem {
 	private CheckBox box5;
 	private CheckBox[] boxes;
 	private String[] checkBoxValues;
+	BusinessLogic buslog = null;
+	public MultipleAnswers(String subTopicName, String questionNumber){
 
-	public MultipleAnswers(
-			String mainTopic,
-			String subTopic,
-			String questionChallengeID,
-			/*String[] checkBoxValues,*/ 
-			String question,
-			String hintText,
-			String solution){
-		
-		
-//		for (int i = 0; i < checkBoxValues.length; i++)
-//			this.checkBoxValues[i] = checkBoxValues[i];
-		
-//		boxes = new CheckBox[5];
-//		for (int i = 0; i < 5; i++)
-//			boxes[i] = new CheckBox(checkBoxValues[i]);
 			
 		
+		buslog = new BusinessLogic();
 		
-		
-		Panel questionContent = createQuestionContent();
+
+		int subTopicID = buslog.getSubtopicID(subTopicName);
+		int challengeID = buslog.getChallengeId(subTopicID, questionNumber);
+		Panel questionContent = createQuestionContent(challengeID);
 			
-		//This line will have the arguments changed with calls to the database.
-		Panel questionPanel = createQuestion("3", "What kind of somethin or other is a _______ when blah blah.");
-		//This line will have the arguments changed with calls to the database.
-		Button hint = createHintButton(hintText);
-		//This line will have the arguments changed with calls to the database.
-		Button submit = createSubmitButton(solution);
+		Panel questionPanel = createQuestion(questionNumber, buslog.getQuestion(challengeID));
+		Button hint = createHintButton(buslog.getHint(challengeID));
+		Button submit = createSubmitButton(buslog.getSolution(challengeID));
 
 		addComponent(questionPanel, "left: 0px; top: 0px;");
 		addComponent(questionContent, "left: 0px; top: 160px;");
@@ -67,32 +60,30 @@ public class MultipleAnswers extends PracticeProblem {
 	 * 
 	 * @return Fill in the blank panel
 	 */
-	private Panel createQuestionContent() {
+	private Panel createQuestionContent(int challengeID) {
 
 		Panel questionContent = new Panel();
 		questionContent.setWidth("600px");
 		questionContent.setHeight("400px");
 		
 		VerticalLayout subLayout = new VerticalLayout();
-		
+	
+		subLayout.setSpacing(true);
 		Label fillInTheBlankLabel = new Label("Fill In The Blank");
 		subLayout.addComponent(fillInTheBlankLabel);
+	
+		ArrayList<String> checkboxes = buslog.getCheckBoxes(challengeID);
+
+		box1 = new CheckBox(checkboxes.get(0));
+		box2 = new CheckBox(checkboxes.get(1));
+		box3 = new CheckBox(checkboxes.get(2));
+		box4 = new CheckBox(checkboxes.get(3));
+		box5 = new CheckBox(checkboxes.get(4));
 		
-		
-		
-		box1 = new CheckBox("for");
 		subLayout.addComponent(box1);
-		
-		box2 = new CheckBox("while");
 		subLayout.addComponent(box2);
-		
-		box3 = new CheckBox("for each loop");
 		subLayout.addComponent(box3);
-		
-		box4 = new CheckBox("switch");
 		subLayout.addComponent(box4);
-		
-		box5 = new CheckBox("Sysout.");
 		subLayout.addComponent(box5);
 
 		questionContent.setContent(subLayout);
@@ -115,6 +106,14 @@ public class MultipleAnswers extends PracticeProblem {
 		// and correctly comparing them.
 		Window responseWindow = new Window();
 		String comparingString = "";
+		Notification correct = new Notification("");
+		
+		correct.setDescription("Testing Description");
+		correct.setCaption("Correct!");
+		correct.setStyleName("Success");
+       	
+		correct.setPosition(Position.MIDDLE_CENTER);
+		correct.setDelayMsec(2000);
 
         responseWindow.setCaption("");
 		responseWindow.setResizable(true);
@@ -136,13 +135,18 @@ public class MultipleAnswers extends PracticeProblem {
         	comparingString += "5";
         
         if (comparingString.equalsIgnoreCase("") || comparingString == null)
+       	
         	responseWindow.setCaption("Invalid");
-        if (comparingString.equalsIgnoreCase(solution.replaceAll("[^0-9]", "")))
-        	responseWindow.setCaption("Good Job");
+        if (comparingString.equalsIgnoreCase(solution.replaceAll("[^0-9]", ""))) {
+        	
+        	correct.show(Page.getCurrent());
+        	//responseWindow.setCaption("Good Job");
+        }
         else
-        	responseWindow.setCaption("NO!!!!");
+        	correct.show(Page.getCurrent());
+        	//responseWindow.setCaption("NO!!!!");
         
-        responseWindow.focus();
+        //responseWindow.focus();
         
 	}
 	
@@ -155,7 +159,7 @@ public class MultipleAnswers extends PracticeProblem {
 	 */
 	private Panel createQuestion(String questionNumber, String questionText) {
 
-		Panel questionPanel = new Panel("Question " + questionNumber);
+		Panel questionPanel = new Panel(questionNumber);
 		questionPanel.setIcon(FontAwesome.QUESTION);
 		questionPanel.setWidth("600px");
 		questionPanel.setHeight("150px");
@@ -218,14 +222,4 @@ public class MultipleAnswers extends PracticeProblem {
 		return hint;
 	}
 
-//	public String getMainTopic() {
-//		return mainTopic;
-//	}
-//
-//	public String getSubTopic() {
-//		return subTopic;
-//	}
-
-		
-	
 }
