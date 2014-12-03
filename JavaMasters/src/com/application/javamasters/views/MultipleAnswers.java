@@ -35,22 +35,17 @@ public class MultipleAnswers extends PracticeProblem {
 	BusinessLogic buslog = null;
 	public MultipleAnswers(String subTopicName, String questionNumber){
 
-			
-		
-		buslog = new BusinessLogic();
-		
 
+		super(subTopicName, questionNumber);
+		buslog = new BusinessLogic();
+			
 		int subTopicID = buslog.getSubtopicID(subTopicName);
-		int challengeID = buslog.getChallengeId(subTopicID, questionNumber);
+		int challengeID = buslog.getChallengeId(subTopicID, questionNumber);	
 		Panel questionContent = createQuestionContent(challengeID);
 			
-		Panel questionPanel = createQuestion(questionNumber, buslog.getQuestion(challengeID));
-		Button hint = createHintButton(buslog.getHint(challengeID));
 		Button submit = createSubmitButton(buslog.getSolution(challengeID));
 
-		addComponent(questionPanel, "left: 0px; top: 0px;");
 		addComponent(questionContent, "left: 0px; top: 160px;");
-		addComponent(hint, "right: 300px; top: 570px;");
 		addComponent(submit, "right: 200px; top: 570px;");
 	}
 	

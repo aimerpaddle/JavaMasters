@@ -1,6 +1,6 @@
 package com.application.javamasters.views;
 
-import com.vaadin.server.FontAwesome;
+import com.application.javamasters.business.BusinessLogic;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -18,9 +18,10 @@ import com.vaadin.ui.Button.ClickListener;
 public class FillInTheBlank extends PracticeProblem {
 	
 	
+	
+	private static final long serialVersionUID = 1L;
 	private TextField userInputTextField;
-	private String mainTopic;
-	private String subTopic;
+	BusinessLogic buslog = null;
 
 	/**
 	 * A constructor that 
@@ -29,26 +30,19 @@ public class FillInTheBlank extends PracticeProblem {
 	 * @param This problems subTopic
 	 * @param What question number (1, 2, 3, 4, or 5) this question is
 	 */
-	public FillInTheBlank(
-			String mainTopic,
-			String subTopic,
-			String questionChallengeID,
-			String question,
-			String hintText,
-			String solution){
-		
-		Panel questionContent = createQuestionContent();
-		
-		//This line will have the arguments changed with calls to the database.
-		Panel questionPanel = createQuestion(questionChallengeID, question);
-		//This line will have the arguments changed with calls to the database.
-		Button hint = createHintButton(hintText);
-		//This line will have the arguments changed with calls to the database.
-		Button submit = createSubmitButton(solution);
+	public FillInTheBlank(String subTopicName, String questionNumber){
+			
 
-		addComponent(questionPanel, "left: 0px; top: 0px;");
+		super(subTopicName, questionNumber);
+		buslog = new BusinessLogic();
+			
+		int subTopicID = buslog.getSubtopicID(subTopicName);
+		int challengeID = buslog.getChallengeId(subTopicID, questionNumber);	
+		Panel questionContent = createQuestionContent(challengeID);
+			
+		Button submit = createSubmitButton(buslog.getSolution(challengeID));
+
 		addComponent(questionContent, "left: 0px; top: 160px;");
-		addComponent(hint, "right: 300px; top: 570px;");
 		addComponent(submit, "right: 200px; top: 570px;");
 	}
 	
@@ -58,7 +52,7 @@ public class FillInTheBlank extends PracticeProblem {
 	 * 
 	 * @return Fill in the blank panel
 	 */
-	private Panel createQuestionContent() {
+	private Panel createQuestionContent(int challengeID) {
 
 		Panel questionContent = new Panel();
 		questionContent.setWidth("600px");
@@ -120,58 +114,6 @@ public class FillInTheBlank extends PracticeProblem {
 	}
 	
 	/**
-	 * Creates the panel and the text for the problem type.
-	 * 
-	 * @param Either question number 1,2,3,4, or 5
-	 * @param The text for the question
-	 * @return formatted Panel
-	 */
-	private Panel createQuestion(String questionChallengeID, String questionText) {
-
-		Panel questionPanel = new Panel("Question " + 5);
-		questionPanel.setIcon(FontAwesome.QUESTION);
-		questionPanel.setWidth("600px");
-		questionPanel.setHeight("150px");
-
-		Label questionLabel = new Label(questionText);
-		questionLabel.addStyleName("huge");
-		questionPanel.setContent(questionLabel);
-
-		return questionPanel;
-	}
-	
-	/**
-	 * Creates a hint button that the student can click.  When
-	 * clicked, it will show a hint in a window.
-	 * 
-	 * @param Text to go inside the hint.
-	 * @return Hint Button
-	 */
-	private Button createHintButton(final String hintText) {
-
-		final Window win = new Window("Hint");
-
-		
-		final Button hint = new Button("Hint",
-                new ClickListener() {
-					
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        getUI().addWindow(win);
-                        win.setCaption(hintText);
-                		win.setResizable(true);
-                        win.setClosable(true);
-                        win.setHeight(null);
-                        win.center();
-                        win.focus();
-                        event.getButton().setEnabled(false);
-                    }
-                });
-		
-		return hint;
-	}
-	
-	/**
 	 * Creates the submit button with a clickListener which calls a
 	 * method that tests whether the user's input is correct.
 	 * 
@@ -182,6 +124,9 @@ public class FillInTheBlank extends PracticeProblem {
 		Button hint = new Button("Submit",
 				new ClickListener() {
 					
+					
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(ClickEvent event) {
 						validateUserAnswer(solution);
@@ -191,14 +136,4 @@ public class FillInTheBlank extends PracticeProblem {
 		return hint;
 	}
 
-	public String getMainTopic() {
-		return mainTopic;
-	}
-
-	public String getSubTopic() {
-		return subTopic;
-	}
-	
-	
-	
 }

@@ -1,5 +1,8 @@
 package com.application.javamasters.views;
 
+import java.util.ArrayList;
+
+import com.application.javamasters.business.BusinessLogic;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
@@ -18,45 +21,43 @@ public class MultipleChoice extends PracticeProblem{
 	private static final long serialVersionUID = 182216139118824118L;
 	private OptionGroup possibleAnswers;
 	private String[] radioButtonValues;
+	private BusinessLogic buslog = null;
 	
-	public MultipleChoice(String mainTopic, String subTopic, String questionChallengeID, 
-			String[] radioButtonValues, String question, String hintText, String solution){
-		
-		this.radioButtonValues = radioButtonValues;
-		
-		for (int i = 0; i < radioButtonValues.length - 1; i++)
-			this.possibleAnswers.addItem(this.radioButtonValues[i]);	
-		
-		
-		
-		Panel questionContent = createQuestionContent();
-			
-		//This line will have the arguments changed with calls to the database.
-		Panel questionPanel = createQuestion(questionChallengeID, question);
-		//This line will have the arguments changed with calls to the database.
-		Button hint = createHintButton(hintText);
-		//This line will have the arguments changed with calls to the database.
-		Button submit = createSubmitButton(solution);
+	public MultipleChoice(String subTopicName, String questionNumber){
 
-		addComponent(questionPanel, "left: 0px; top: 0px;");
+		super(subTopicName, questionNumber);
+		buslog = new BusinessLogic();
+			
+		int subTopicID = buslog.getSubtopicID(subTopicName);
+		int challengeID = buslog.getChallengeId(subTopicID, questionNumber);	
+		Panel questionContent = createQuestionContent(challengeID);
+		Button submit = createSubmitButton(buslog.getSolution(challengeID));
+		
 		addComponent(questionContent, "left: 0px; top: 160px;");
-		addComponent(hint, "right: 300px; top: 570px;");
 		addComponent(submit, "right: 200px; top: 570px;");
 	}
 	
-	private Panel createQuestionContent() {
+	private Panel createQuestionContent(int challengeID) {
 
 		Panel questionContent = new Panel();
 		questionContent.setWidth("600px");
 		questionContent.setHeight("400px");
 		
 		VerticalLayout subLayout = new VerticalLayout();
-		
+		subLayout.setSpacing(true);
 		Label multipleChoiceLabel = new Label("MultipleChoice");
 		subLayout.addComponent(multipleChoiceLabel);
-		
-		subLayout.addComponent(this.possibleAnswers);
+	
+		ArrayList<String> radioButtons = buslog.getRadioButtons(challengeID);
 
+		OptionGroup group = new OptionGroup();
+		group.addItem(radioButtons.get(0));
+		group.addItem(radioButtons.get(1));
+		group.addItem(radioButtons.get(2));
+		group.addItem(radioButtons.get(3));
+		group.addItem(radioButtons.get(4));
+		
+		subLayout.addComponent(group);
 		questionContent.setContent(subLayout);
 		return questionContent;
 	}
@@ -86,45 +87,7 @@ public class MultipleChoice extends PracticeProblem{
         responseWindow.focus();
         
 	}
-	
-	private Panel createQuestion(String questionNumber, String questionText) {
-
-		Panel questionPanel = new Panel("Question " + questionNumber);
-		questionPanel.setIcon(FontAwesome.QUESTION);
-		questionPanel.setWidth("600px");
-		questionPanel.setHeight("150px");
-
-		Label questionLabel = new Label(questionText);
-		questionLabel.addStyleName("huge");
-		questionPanel.setContent(questionLabel);
-
-		return questionPanel;
-	}
-	
-	private Button createHintButton(final String hintText) {
-
-		final Window win = new Window("Hint");
-
 		
-		final Button hint = new Button("Hint",
-                new ClickListener() {
-					
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        getUI().addWindow(win);
-                        win.setCaption(hintText);
-                		win.setResizable(true);
-                        win.setClosable(true);
-                        win.setHeight(null);
-                        win.center();
-                        win.focus();
-                        event.getButton().setEnabled(false);
-                    }
-                });
-		
-		return hint;
-	}
-	
 	private Button createSubmitButton(final String solution) {
 		Button hint = new Button("Submit",
 				new ClickListener() {

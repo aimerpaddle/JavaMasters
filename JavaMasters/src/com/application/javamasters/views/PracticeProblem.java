@@ -19,31 +19,30 @@ public class PracticeProblem extends AbsoluteLayout{
 	private static final long serialVersionUID = 1L;
 	private String hintText;
 	private String solution;
+	private BusinessLogic buslog = null;
 
-	public PracticeProblem() {
+	public PracticeProblem(String subTopicName, String questionNumber) {
 
 
 		setWidth("800px");
 		setHeight("100%");
 		
-		BusinessLogic buslog = new BusinessLogic();
-
-		//Panel questionPanel = createQuestion("Test");
-		Panel questionPanel = createQuestion(buslog.getQuestion(4));
-		//Panel questionPanel = createQuestion(buslog.getQuestionText(4)); 	
-		Panel questionContent = createQuestionContent();
+		buslog = new BusinessLogic();
+		
+		int subTopicID = buslog.getSubtopicID(subTopicName);
+		int challengeID = buslog.getChallengeId(subTopicID, questionNumber);	
+			
+		Panel questionPanel = createQuestion(questionNumber, buslog.getQuestion(challengeID));
+		Button hint = createHintButton(buslog.getHint(challengeID));
 		Panel questionNavigation = new QuestionNavigation();
-		Button hint = createHintButton();
-		Button submit = createSubmitButton();
+
 
 		addComponent(questionPanel, "left: 0px; top: 0px;");
-		addComponent(questionContent, "left: 0px; top: 160px;");
 		addComponent(hint, "right: 300px; top: 570px;");
-		addComponent(submit, "right: 200px; top: 570px;");
 		addComponent(questionNavigation, "right: 0px; top: 0px;");
 	}
 	
-	private Button createHintButton() {
+	private Button createHintButton(final String hintText) {
 
 		final Window win = new Window("Hint");
 
@@ -68,8 +67,8 @@ public class PracticeProblem extends AbsoluteLayout{
 		return hint;
 	}
 
-	private Button createSubmitButton() {
-		Button hint = new Button("Submit",
+	private Button createSubmitButton(final String solution) {
+		Button submit = new Button("Submit",
 				new ClickListener() {
 					
 					@Override
@@ -78,15 +77,15 @@ public class PracticeProblem extends AbsoluteLayout{
 					}
 				});
 
-		return hint;
+		return submit;
 	}
 	
 	private void validateUserAnswer(String solution){
 	}
 
-	private Panel createQuestion(String questionText) {
+	private Panel createQuestion(String questionNumber, String questionText) {
 
-		Panel questionPanel = new Panel("Example Question 1");
+		Panel questionPanel = new Panel(questionNumber);
 		questionPanel.setIcon(FontAwesome.QUESTION);
 		questionPanel.setWidth("600px");
 		questionPanel.setHeight("150px");
@@ -98,7 +97,7 @@ public class PracticeProblem extends AbsoluteLayout{
 		return questionPanel;
 	}
 
-	private Panel createQuestionContent() {
+	private Panel createQuestionContent(int ChallengeID) {
 
 		Panel questionContent = new Panel();
 		questionContent.setWidth("600px");

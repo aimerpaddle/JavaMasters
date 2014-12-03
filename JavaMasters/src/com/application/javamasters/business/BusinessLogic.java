@@ -350,6 +350,34 @@ public class BusinessLogic {
 		
 	}
 
+	public ArrayList<String> getRadioButtons(int challengeID){
+		
+		ArrayList<String> radioButtons = new ArrayList<String>();
+		
+		try {
+
+			PreparedStatement stmt = conn
+					.prepareStatement("SELECT value1, value2, value3, value4, value5 FROM multiple_choice WHERE challenge_id = ?");
+			stmt.setInt(1, challengeID);
+			stmt.executeQuery();
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+
+				radioButtons.add(rs.getString(1));
+				radioButtons.add(rs.getString(2));
+				radioButtons.add(rs.getString(3));
+				radioButtons.add(rs.getString(4));
+				radioButtons.add(rs.getString(5));
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return radioButtons;
+		
+	}
 	
 	
 	public String getHint(int challengeID) {
