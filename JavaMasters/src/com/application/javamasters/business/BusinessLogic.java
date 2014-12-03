@@ -7,12 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.application.javamasters.business.DatabaseManager;
+import com.vaadin.data.util.sqlcontainer.connection.JDBCConnectionPool;
+import com.vaadin.data.util.sqlcontainer.connection.SimpleJDBCConnectionPool;
 
 
 public class BusinessLogic {
 
 	private DatabaseManager dbManager = null;
 	private Connection conn = null;
+	private SimpleJDBCConnectionPool connPool = null;
 
 	// private SQLContainer helpfulLinksContainer =
 	// dbManager.getHelpfulLinksContainer();
@@ -24,8 +27,7 @@ public class BusinessLogic {
 		try {
 			dbManager = new DatabaseManager();
 
-			dbManager.initConnectionPool();
-			conn = dbManager.initConnection();
+			connPool = dbManager.initConnectionPool();
 
 			
 		} catch (SQLException e) {
@@ -36,6 +38,7 @@ public class BusinessLogic {
 
 	public String getOverviewContent(int subTopicID) {
 
+		conn = dbManager.initConnection();
 		String content = "";
 
 		try {
@@ -56,11 +59,13 @@ public class BusinessLogic {
 			e.printStackTrace();
 		}
 
+		connPool.releaseConnection(conn);
 		return content;
 	}
 
 	public String getOverviewVideo(int subTopicID) {
-
+	
+		conn = dbManager.initConnection();
 		String url = "";
 		try {
 
@@ -83,12 +88,15 @@ public class BusinessLogic {
 			n.printStackTrace();
 		}
 
+		
+		connPool.releaseConnection(conn);
 		return url;
 
 	}
 
 	public String getHelpfulLink(int subTopicID, int linkNum) {
 
+		conn = dbManager.initConnection();
 		String helpfulLink = "";
 
 		try {
@@ -112,11 +120,13 @@ public class BusinessLogic {
 
 		}
 
+		connPool.releaseConnection(conn);
 		return helpfulLink;
 	}
 
 	public String getHelpfulVideo(int subTopicID, int videoNum) {
 
+		conn = dbManager.initConnection();
 		String videoURL = "";
 
 		try {
@@ -140,11 +150,13 @@ public class BusinessLogic {
 
 		}
 
+		connPool.releaseConnection(conn);
 		return videoURL;
 	}
 
 	public int getSubtopicID(String subtopicName) {
 
+		conn = dbManager.initConnection();
 		int id = 0;
 		try {
 			PreparedStatement stmt = conn
@@ -163,12 +175,14 @@ public class BusinessLogic {
 			e.printStackTrace();
 
 		}
+		connPool.releaseConnection(conn);
 		return id;
 
 	}
 
 	public int getChallengeId(int subtopicID, String questionNumber) {
 
+		conn = dbManager.initConnection();
 		int id = 0;
 		try {
 
@@ -190,12 +204,14 @@ public class BusinessLogic {
 			e.printStackTrace();
 		}
 
+		connPool.releaseConnection(conn);
 		return id;
 
 	}
 
 	public String getSubTopicName(int subTopicID) {
 
+		conn = dbManager.initConnection();
 		String name = "";
 		try {
 
@@ -216,11 +232,13 @@ public class BusinessLogic {
 			e.printStackTrace();
 		}
 
+		connPool.releaseConnection(conn);
 		return name;
 	}
 
 	public int getChallengeTypeID(int challengeID) {
 
+		conn = dbManager.initConnection();
 		int id = 0;
 
 		try {
@@ -240,11 +258,13 @@ public class BusinessLogic {
 			e.printStackTrace();
 		}
 
+		connPool.releaseConnection(conn);
 		return id;
 	}
 
 	public String getQuestionTitle(int challengeID) {
 
+		conn = dbManager.initConnection();
 		String title = "";
 
 		try {
@@ -264,11 +284,13 @@ public class BusinessLogic {
 			e.printStackTrace();
 		}
 
+		connPool.releaseConnection(conn);
 		return title;
 	}
 
 	public String getQuestion(int challengeID) {
 
+		conn = dbManager.initConnection();
 		String question = "";
 
 		try {
@@ -288,11 +310,13 @@ public class BusinessLogic {
 			e.printStackTrace();
 		}
 
+		connPool.releaseConnection(conn);
 		return question;
 	}
 
 	public String getSolution(int challengeID) {
 
+		conn = dbManager.initConnection();
 		String solution = "";
 
 		try {
@@ -312,11 +336,13 @@ public class BusinessLogic {
 			e.printStackTrace();
 		}
 
+		connPool.releaseConnection(conn);
 		return solution;
 	}
 	
 	public ArrayList<String> getCheckBoxes(int challengeID){
 		
+		conn = dbManager.initConnection();
 		ArrayList<String> checkboxes = new ArrayList<String>();
 		
 		try {
@@ -340,12 +366,14 @@ public class BusinessLogic {
 			e.printStackTrace();
 		}
 
+		connPool.releaseConnection(conn);
 		return checkboxes;
 		
 	}
 
 	public ArrayList<String> getRadioButtons(int challengeID){
 		
+		conn = dbManager.initConnection();
 		ArrayList<String> radioButtons = new ArrayList<String>();
 		
 		try {
@@ -369,6 +397,7 @@ public class BusinessLogic {
 			e.printStackTrace();
 		}
 
+		connPool.releaseConnection(conn);
 		return radioButtons;
 		
 	}
@@ -376,6 +405,7 @@ public class BusinessLogic {
 	
 	public String getHint(int challengeID) {
 
+		conn = dbManager.initConnection();
 		String hint = "";
 
 		try {
@@ -395,6 +425,7 @@ public class BusinessLogic {
 			e.printStackTrace();
 		}
 
+		connPool.releaseConnection(conn);
 		return hint;
 	}
 
@@ -420,6 +451,7 @@ public class BusinessLogic {
 	// }
 	public String getQuestionText(int challengeID) {
 
+		conn = dbManager.initConnection();
 		String id = "";
 		try {
 			PreparedStatement stmt = conn
@@ -438,6 +470,7 @@ public class BusinessLogic {
 			e.printStackTrace();
 
 		}
+		connPool.releaseConnection(conn);
 		return id;
 
 	}

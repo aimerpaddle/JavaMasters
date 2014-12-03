@@ -16,7 +16,7 @@ public class QuestionNavigation extends Panel{
 	private static final long serialVersionUID = -2630493460440558169L;
 	private VerticalLayout questionLayout = new VerticalLayout();
 	
-	public QuestionNavigation() {
+	public QuestionNavigation(final String subTopicName, String questionNumber) {
 		this.setCaption("Questions");
 		this.setIcon(FontAwesome.LIST_ALT);
 		this.setImmediate(true);
@@ -31,7 +31,7 @@ public class QuestionNavigation extends Panel{
 					@Override
 					public void buttonClick(ClickEvent event) {
 						//This method call will have its arguments replaced by database calls.
-						JavaMastersUI.changeProblemType("Logic Operators", "Question 1");
+						JavaMastersUI.changeProblemType(subTopicName, "Question 1");
 						//JavaMastersUI.changeProblemType(mainTopic, subTopic, questionChallengeID, question, hint, solution, questionTypeID);
 					}
 				});
@@ -41,12 +41,33 @@ public class QuestionNavigation extends Panel{
 				@Override
 				public void buttonClick(ClickEvent event) {
 					//This method call will have its arguments replaced by database calls.
-					JavaMastersUI.changeProblemType("Logic Operators", "Question 2");
+					JavaMastersUI.changeProblemType(subTopicName, "Question 2");
 				}
 			});
-		Button question3 = new Button("Question 3");
-		Button question4 = new Button("Question 4");
-		Button question5 = new Button("Question 5");
+		Button question3 = new Button("Question 3", 
+				new ClickListener() {
+					
+					@Override
+					public void buttonClick(ClickEvent event) {
+						JavaMastersUI.changeProblemType(subTopicName, "Question 3");
+					}
+				});
+		Button question4 = new Button("Question 4", 
+				new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				JavaMastersUI.changeProblemType(subTopicName, "Question 4");
+			}
+		});
+		Button question5 = new Button("Question 5", 
+				new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				JavaMastersUI.changeProblemType(subTopicName, "Question 5");
+			}
+		});
 		
 		Button[] questionButtons = {question1, question2, question3, question4, question5};
 		

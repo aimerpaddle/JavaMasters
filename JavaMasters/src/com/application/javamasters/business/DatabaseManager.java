@@ -48,22 +48,20 @@ public class DatabaseManager {
 	 * Creates a new connection to the server, then tries to connect  
 	 * to the javamaster database.
 	 */
-	public void initConnectionPool() {
+	public SimpleJDBCConnectionPool initConnectionPool() {
 		try {
 			//Class.forName("com.mysql.jdbcDriver");
 			connectionPool = new SimpleJDBCConnectionPool(
 					"com.mysql.jdbc.Driver",
 					"jdbc:mysql://localhost:3306/javamaster", "root",
-					"lak3rs24", 2, 5);
+					"lak3rs24", 2, 50);
 			
 						
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-//		} catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
+		return connectionPool;
 	}
 	
 	public void closeConnectionPool() {

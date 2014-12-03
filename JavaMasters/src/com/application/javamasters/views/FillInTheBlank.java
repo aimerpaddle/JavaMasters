@@ -1,11 +1,15 @@
 package com.application.javamasters.views;
 
 import com.application.javamasters.business.BusinessLogic;
+import com.vaadin.server.Page;
+import com.vaadin.shared.Position;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -22,6 +26,9 @@ public class FillInTheBlank extends PracticeProblem {
 	private static final long serialVersionUID = 1L;
 	private TextField userInputTextField;
 	BusinessLogic buslog = null;
+	private Panel solPanel = null;
+
+	private int challengeID;
 
 	/**
 	 * A constructor that 
@@ -37,7 +44,7 @@ public class FillInTheBlank extends PracticeProblem {
 		buslog = new BusinessLogic();
 			
 		int subTopicID = buslog.getSubtopicID(subTopicName);
-		int challengeID = buslog.getChallengeId(subTopicID, questionNumber);	
+		challengeID = buslog.getChallengeId(subTopicID, questionNumber);	
 		Panel questionContent = createQuestionContent(challengeID);
 			
 		Button submit = createSubmitButton(buslog.getSolution(challengeID));
@@ -80,35 +87,60 @@ public class FillInTheBlank extends PracticeProblem {
 	{
 		//The window stuff is just to visually test if I am correctly getting the textField text
 		// and correctly comparing them.
-		Window responseWindow = new Window();
+		Notification correct = new Notification("");
+		Notification incorrect = new Notification("");
+		Notification invalid = new Notification("");
+		
+		correct.setDescription("Your answer was correct! Good job!");
+		correct.setCaption("Correct!");
+		correct.setPosition(Position.MIDDLE_CENTER);
+		correct.setDelayMsec(3000);
+		correct.setStyleName("success");
 
-        responseWindow.setCaption("");
-		responseWindow.setResizable(true);
-        responseWindow.setClosable(true);
-        responseWindow.setHeight("100px");
-        responseWindow.setWidth("200px");
-        responseWindow.center();
-        getUI().addWindow(responseWindow);
+		incorrect.setDescription("Your answer was incorrect. Please try again!");
+		incorrect.setCaption("Incorrect!");
+		incorrect.setPosition(Position.MIDDLE_CENTER);
+		incorrect.setDelayMsec(2000);
+		incorrect.setStyleName("failure");
         
+		invalid.setDescription("Please enter an answer before submitting!");
+		invalid.setCaption("Error");
+		invalid.setPosition(Position.MIDDLE_CENTER);
+		invalid.setDelayMsec(2000);
+		invalid.setStyleName("error");
+		
 		if (userInputTextField.getValue().equals(null) || userInputTextField.getValue().equals(""))
 		{
-			//Tell the user that their input is invalid
-	        responseWindow.setCaption("INVALID");
-			responseWindow.focus();
+        	invalid.show(Page.getCurrent());
+        	
 		}
 		else
 		{
 			if (userInputTextField.getValue().equalsIgnoreCase(solution))
 			{
 				//Tell the user that they got the question correct
-		        responseWindow.setCaption("CORRECT");
-				responseWindow.focus();
+	        	correct.show(Page.getCurrent());
+	        	solPanel = createSolutionPanel(true);
+	        	if (!solPanel.isVisible()){
+	        		this.addComponent(solPanel, "right: 0px; top: 250px;");
+	        	}else {
+	        		removeComponent(solPanel);
+	        		this.addComponent(solPanel, "right: 0px; top: 250px;");
+	        		
+	        	}
 			}
 			else
 			{
 				//Tell the user that they got the wrong answer.
-		        responseWindow.setCaption("INCORRECT");
-				responseWindow.focus();
+	        	incorrect.show(Page.getCurrent());
+	        	solPanel = createSolutionPanel(false);
+	        	if (!solPanel.isVisible()){
+	        		this.addComponent(solPanel, "right: 0px; top: 250px;");
+	        	}else {
+	        		removeComponent(solPanel);
+	        		this.addComponent(solPanel, "right: 0px; top: 250px;");
+	        		
+	        	}
 			}
 		}
 	}
@@ -135,5 +167,51 @@ public class FillInTheBlank extends PracticeProblem {
 		
 		return hint;
 	}
+	
+private Panel createSolutionPanel(boolean isCorrect){
+		
+		Panel solutionPanel = new Panel();
+		solutionPanel.setWidth(null);
+		solutionPanel.setHeight(null);
+
+
+		VerticalLayout vLayout = new VerticalLayout();
+		Label correct = new Label("Correct!");
+		correct.addStyleName("success");
+		Label incorrect = new Label("Incorrect!");
+		incorrect.addStyleName("failure");
+
+		
+		vLayout.setSpacing(true);
+		//vLayout.addStyleName("well");
+		Button solution = new Button("Solution",
+				new ClickListener() {
+			
+					@Override 
+					public void buttonClick(ClickEvent event) {
+					
+						String solutionText = buslog.getSolution(challengeID);
+						final Window win = new Window("Answer");
+						win.setClosable(true);
+						win.setContent(new Label ("Solution: " + solutionText));
+						getUI().addWindow(win);
+						win.center();
+						win.focus();
+					}
+		});
+		
+
+		if(isCorrect){
+			vLayout.addComponent(correct);
+		}else{
+			vLayout.addComponent(incorrect);
+		}
+		vLayout.addComponent(solution);
+		solution.setSizeFull();
+		solutionPanel.setContent(vLayout);
+
+		return solutionPanel;
+	}
+
 
 }

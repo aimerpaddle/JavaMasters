@@ -35,6 +35,7 @@ public class NavigationMenu extends Accordion
 		addTab(mainTopic_Variables, "Variables");
 		
 		MenuBar subTopic_VarDec = getMenuBar("Variables", "Variable Declaring / Instantiation");
+		subTopic_VarDec.addStyleName("color1");
 		variablesLayout.addComponent(subTopic_VarDec);
 		MenuBar subTopic_Int = getMenuBar("Variables", "Int");
 		variablesLayout.addComponent(subTopic_Int);

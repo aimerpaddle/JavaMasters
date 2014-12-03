@@ -32,7 +32,9 @@ public class MultipleAnswers extends PracticeProblem {
 	private CheckBox box3;
 	private CheckBox box4;
 	private CheckBox box5;
+	private Panel solPanel = null;
 	BusinessLogic buslog = null;
+	private int challengeID;
 	public MultipleAnswers(String subTopicName, String questionNumber){
 
 
@@ -40,13 +42,14 @@ public class MultipleAnswers extends PracticeProblem {
 		buslog = new BusinessLogic();
 			
 		int subTopicID = buslog.getSubtopicID(subTopicName);
-		int challengeID = buslog.getChallengeId(subTopicID, questionNumber);	
+		challengeID = buslog.getChallengeId(subTopicID, questionNumber);	
 		Panel questionContent = createQuestionContent(challengeID);
 			
 		Button submit = createSubmitButton(buslog.getSolution(challengeID));
 
 		addComponent(questionContent, "left: 0px; top: 160px;");
 		addComponent(submit, "right: 200px; top: 570px;");
+
 	}
 	
 	/**
@@ -64,7 +67,7 @@ public class MultipleAnswers extends PracticeProblem {
 		VerticalLayout subLayout = new VerticalLayout();
 	
 		subLayout.setSpacing(true);
-		Label fillInTheBlankLabel = new Label("Fill In The Blank");
+		Label fillInTheBlankLabel = new Label("Select all that apply.");
 		subLayout.addComponent(fillInTheBlankLabel);
 	
 		ArrayList<String> checkboxes = buslog.getCheckBoxes(challengeID);
@@ -97,27 +100,29 @@ public class MultipleAnswers extends PracticeProblem {
 	 */
 	private void validateUserAnswer(String solution)
 	{
-		//The window stuff is just to visually test if I am correctly getting the textField text
-		// and correctly comparing them.
-		Window responseWindow = new Window();
 		String comparingString = "";
 		Notification correct = new Notification("");
+		Notification incorrect = new Notification("");
+		Notification invalid = new Notification("");
 		
-		correct.setDescription("Testing Description");
+		correct.setDescription("Your answer was correct! Good job!");
 		correct.setCaption("Correct!");
-		correct.setStyleName("Success");
-       	
 		correct.setPosition(Position.MIDDLE_CENTER);
-		correct.setDelayMsec(2000);
+		correct.setDelayMsec(3000);
+		correct.setStyleName("success");
 
-        responseWindow.setCaption("");
-		responseWindow.setResizable(true);
-        responseWindow.setClosable(true);
-        responseWindow.setHeight("100px");
-        responseWindow.setWidth("200px");
-        responseWindow.center();
-        getUI().addWindow(responseWindow);
+		incorrect.setDescription("Your answer was incorrect. Please try again.");
+		incorrect.setCaption("Incorrect!");
+		incorrect.setPosition(Position.MIDDLE_CENTER);
+		incorrect.setDelayMsec(2000);
+		incorrect.setStyleName("failure");
         
+		invalid.setDescription("Your response was invalid. Please try again.");
+		invalid.setCaption("Error");
+		invalid.setPosition(Position.MIDDLE_CENTER);
+		invalid.setDelayMsec(2000);
+		invalid.setStyleName("error");
+
         if (box1.getValue())
         	comparingString = "1";
         if (box2.getValue())
@@ -130,51 +135,31 @@ public class MultipleAnswers extends PracticeProblem {
         	comparingString += "5";
         
         if (comparingString.equalsIgnoreCase("") || comparingString == null)
-       	
-        	responseWindow.setCaption("Invalid");
-        if (comparingString.equalsIgnoreCase(solution.replaceAll("[^0-9]", ""))) {
-        	
+        	invalid.show(Page.getCurrent());
+        else if (comparingString.equalsIgnoreCase(solution.replaceAll("[^0-9]", ""))){         	
         	correct.show(Page.getCurrent());
-        	//responseWindow.setCaption("Good Job");
+        	solPanel = createSolutionPanel(true);
+        	if (!solPanel.isVisible()){
+        		this.addComponent(solPanel, "right: 0px; top: 250px;");
+        	}else {
+        		removeComponent(solPanel);
+        		this.addComponent(solPanel, "right: 0px; top: 250px;");
+        		
+        	}
         }
-        else
-        	correct.show(Page.getCurrent());
-        	//responseWindow.setCaption("NO!!!!");
+        else{
+        	incorrect.show(Page.getCurrent());
+        	solPanel = createSolutionPanel(false);
+        	if (!solPanel.isVisible()){
+        		this.addComponent(solPanel, "right: 0px; top: 250px;");
+        	}else {
+        		removeComponent(solPanel);
+        		this.addComponent(solPanel, "right: 0px; top: 250px;");
+        		
+        	}
+        }
         
-        //responseWindow.focus();
         
-	}
-	
-
-	/**
-	 * Creates a hint button that the student can click.  When
-	 * clicked, it will show a hint in a window.
-	 * 
-	 * @param Text to go inside the hint.
-	 * @return Hint Button
-	 */
-	private Button createHintButton(final String hintText) {
-
-		final Window win = new Window("Hint");
-
-		
-		final Button hint = new Button("Hint",
-                new ClickListener() {
-					
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        getUI().addWindow(win);
-                        win.setCaption(hintText);
-                		win.setResizable(true);
-                        win.setClosable(true);
-                        win.setHeight(null);
-                        win.center();
-                        win.focus();
-                        event.getButton().setEnabled(false);
-                    }
-                });
-		
-		return hint;
 	}
 	
 	/**
@@ -195,6 +180,51 @@ public class MultipleAnswers extends PracticeProblem {
 				});
 		
 		return hint;
+	}
+	
+	private Panel createSolutionPanel(boolean isCorrect){
+		
+		Panel solutionPanel = new Panel();
+		solutionPanel.setWidth(null);
+		solutionPanel.setHeight(null);
+
+
+		VerticalLayout vLayout = new VerticalLayout();
+		Label correct = new Label("Correct!");
+		correct.addStyleName("success");
+		Label incorrect = new Label("Incorrect!");
+		incorrect.addStyleName("failure");
+
+		
+		vLayout.setSpacing(true);
+		//vLayout.addStyleName("well");
+		Button solution = new Button("Solution",
+				new ClickListener() {
+			
+					@Override 
+					public void buttonClick(ClickEvent event) {
+					
+						String solutionText = buslog.getSolution(challengeID);
+						final Window win = new Window("Answer");
+						win.setClosable(true);
+						win.setContent(new Label ("Solution: " + solutionText));
+						getUI().addWindow(win);
+						win.center();
+						win.focus();
+					}
+		});
+		
+
+		if(isCorrect){
+			vLayout.addComponent(correct);
+		}else{
+			vLayout.addComponent(incorrect);
+		}
+		vLayout.addComponent(solution);
+		solution.setSizeFull();
+		solutionPanel.setContent(vLayout);
+
+		return solutionPanel;
 	}
 
 }

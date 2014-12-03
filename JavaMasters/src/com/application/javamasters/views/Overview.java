@@ -34,7 +34,7 @@ public class Overview extends AbsoluteLayout{
 		Panel overviewVideo = new Panel("Video");
 		Embedded video = createVideo(bl.getOverviewVideo(subTopicID));
 		overviewVideo.setContent(video);
-		overviewVideo.setWidth("500px");
+		overviewVideo.setWidth("502px");
 
 		addComponent(overviewContent, "left: 0px; top: 0px;");
 		addComponent(overviewVideo, "left: 150px; top: 200px;");

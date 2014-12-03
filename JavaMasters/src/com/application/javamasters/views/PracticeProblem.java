@@ -3,9 +3,12 @@ package com.application.javamasters.views;
 import com.application.javamasters.business.BusinessLogic;
 import com.application.javamasters.components.QuestionNavigation;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
+import com.vaadin.shared.Position;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
@@ -34,7 +37,7 @@ public class PracticeProblem extends AbsoluteLayout{
 			
 		Panel questionPanel = createQuestion(questionNumber, buslog.getQuestion(challengeID));
 		Button hint = createHintButton(buslog.getHint(challengeID));
-		Panel questionNavigation = new QuestionNavigation();
+		Panel questionNavigation = new QuestionNavigation(subTopicName, questionNumber);
 
 
 		addComponent(questionPanel, "left: 0px; top: 0px;");
@@ -52,15 +55,17 @@ public class PracticeProblem extends AbsoluteLayout{
 					
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        getUI().addWindow(win);
-                        win.setCaption(hintText);
-                		win.setResizable(true);
-                        win.setClosable(true);
-                        win.setHeight("200px");
-                        win.setWidth("300px");
-                        win.center();
-                        win.focus();
-                        event.getButton().setEnabled(false);
+                    	
+                    	Notification hint = new Notification("");
+                    	
+                    	hint.setCaption("Hint");
+                    	hint.setDescription(hintText);
+                    	hint.setPosition(Position.MIDDLE_CENTER);
+                    	hint.setDelayMsec(5000);
+                    	hint.setStyleName("warning");
+                    	hint.setIcon(FontAwesome.LIGHTBULB_O);
+
+                    	hint.show(Page.getCurrent());
                     }
                 });
 		
@@ -89,6 +94,7 @@ public class PracticeProblem extends AbsoluteLayout{
 		questionPanel.setIcon(FontAwesome.QUESTION);
 		questionPanel.setWidth("600px");
 		questionPanel.setHeight("150px");
+		
 
 		Label question = new Label(questionText);
 		question.addStyleName("huge");
