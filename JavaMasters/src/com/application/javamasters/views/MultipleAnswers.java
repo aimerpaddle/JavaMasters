@@ -25,13 +25,13 @@ import com.vaadin.ui.Button.ClickListener;
  */
 public class MultipleAnswers extends PracticeProblem {
 	
+
+	private static final long serialVersionUID = 1L;
 	private CheckBox box1;
 	private CheckBox box2;
 	private CheckBox box3;
 	private CheckBox box4;
 	private CheckBox box5;
-	private CheckBox[] boxes;
-	private String[] checkBoxValues;
 	BusinessLogic buslog = null;
 	public MultipleAnswers(String subTopicName, String questionNumber){
 
@@ -145,27 +145,7 @@ public class MultipleAnswers extends PracticeProblem {
         
 	}
 	
-	/**
-	 * Creates the panel and the text for the problem type.
-	 * 
-	 * @param Either question number 1,2,3,4, or 5
-	 * @param The text for the question
-	 * @return formatted Panel
-	 */
-	private Panel createQuestion(String questionNumber, String questionText) {
 
-		Panel questionPanel = new Panel(questionNumber);
-		questionPanel.setIcon(FontAwesome.QUESTION);
-		questionPanel.setWidth("600px");
-		questionPanel.setHeight("150px");
-
-		Label questionLabel = new Label(questionText);
-		questionLabel.addStyleName("huge");
-		questionPanel.setContent(questionLabel);
-
-		return questionPanel;
-	}
-	
 	/**
 	 * Creates a hint button that the student can click.  When
 	 * clicked, it will show a hint in a window.

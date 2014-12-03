@@ -177,7 +177,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Variables  |  Variable Declaring / Instantiation  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Variable Declaring / Instantiation", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Variable Declaring / Instantiation", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -202,7 +202,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Variables  |  Int  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new FillInTheBlank("Int", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new FillInTheBlank("Int", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -252,7 +252,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Variables  |  String / Char  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("String / Char", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("String / Char", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -277,7 +277,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Variables  |  Boolean  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Boolean", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Boolean", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -302,7 +302,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Variables  |  Scanner  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Scanner", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Scanner", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -333,7 +333,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Control Statements 1  |  Selection Statements  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Selection Statements", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Selection Statements", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -383,7 +383,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Control Statements 1  |  Increment / Decrement  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Increment / Decrement", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Increment / Decrement", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -415,7 +415,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Control Statements 2  |  For Loop  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("For Loop", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("For Loop", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -440,7 +440,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Control Statements 2  |  While / Do While  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("While / Do While", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("While / Do While", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -465,7 +465,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Control Statements 2  |  For Each Loop  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("For Each Loop", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("For Each Loop", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -496,7 +496,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Methods and Classes  |  Classes - Declare/Create/Access  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Classes - Declare/Create/Access", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Classes - Declare/Create/Access", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -521,7 +521,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Methods and Classes  |  Methods  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Methods", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Methods", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -546,7 +546,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Methods and Classes  |  Getters / Setters  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Getters / Setters", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Getters / Setters", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -571,7 +571,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Methods and Classes  |  Constructors  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Constructors", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Constructors", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -602,7 +602,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Arrays  |  Passing Arrays as Arguments  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Passing Arrays as Arguments", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Passing Arrays as Arguments", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -628,7 +628,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Arrays  |  Variable Declaring / Instantiation  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Logic Operators", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Logic Operators", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -654,7 +654,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Arrays  |  Class Array  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Class Array", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Class Array", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -680,7 +680,7 @@ public class JavaMastersUI extends UI {
 								break;
 							case "Practice Problems":
 								title.setCaption("Arrays  |  Array List <E>  |  Practice Problems");
-								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Array List <E>", "Question 2"));
+								horizontalLayout.addComponent(contentLayout = new MultipleAnswers("Array List <E>", "Question 1"));
 										
 								centerContentIsALayout = true;
 								
@@ -738,7 +738,7 @@ public class JavaMastersUI extends UI {
 				temp = new FillInTheBlank(subTopic, questionNum);
 				break;
 		}
-		horizontalLayout.removeComponent(problemLayout);
+		horizontalLayout.removeComponent(contentLayout);
 		horizontalLayout.addComponent(temp);
 		
 	}

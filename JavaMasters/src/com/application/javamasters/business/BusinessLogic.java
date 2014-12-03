@@ -7,16 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.application.javamasters.business.DatabaseManager;
-import com.vaadin.data.Container.Filter;
-import com.vaadin.data.util.filter.SimpleStringFilter;
-import com.vaadin.data.util.sqlcontainer.SQLContainer;
-import com.vaadin.data.util.sqlcontainer.query.FreeformQuery;
+
 
 public class BusinessLogic {
 
 	private DatabaseManager dbManager = null;
-	private SQLContainer challengeContainer = null;
-	private SQLContainer subTopicContainer = null;
 	private Connection conn = null;
 
 	// private SQLContainer helpfulLinksContainer =
@@ -32,8 +27,7 @@ public class BusinessLogic {
 			dbManager.initConnectionPool();
 			conn = dbManager.initConnection();
 
-			this.challengeContainer = dbManager.initContainers();
-			// this.subTopicContainer = dbManager.getSubTopicContainer();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
