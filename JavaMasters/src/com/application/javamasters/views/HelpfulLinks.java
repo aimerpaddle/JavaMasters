@@ -35,6 +35,11 @@ public class HelpfulLinks extends AbsoluteLayout {
 				new ExternalResource(buslog.getHelpfulLink(subTopicID, 2)));
 		Link link3 = new Link(buslog.getHelpfulLink(subTopicID, 3),
 				new ExternalResource(buslog.getHelpfulLink(subTopicID, 3)));
+
+		link1.setTargetName("_blank");
+		link2.setTargetName("_blank");
+		link3.setTargetName("_blank");
+
 		VerticalLayout links = new VerticalLayout();
 		links.setSpacing(true);
 

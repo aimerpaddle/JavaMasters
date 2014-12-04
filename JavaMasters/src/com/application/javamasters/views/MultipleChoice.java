@@ -107,7 +107,7 @@ public class MultipleChoice extends PracticeProblem {
 			}
 		} else {
 			incorrect.show(Page.getCurrent());
-			solPanel = createSolutionPanel(true);
+			solPanel = createSolutionPanel(false);
 			if (!solPanel.isVisible()) {
 				this.addComponent(solPanel, "right: 0px; top: 250px;");
 			} else {

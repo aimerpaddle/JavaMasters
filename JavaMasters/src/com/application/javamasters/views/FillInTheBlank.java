@@ -176,7 +176,7 @@ private Panel createSolutionPanel(boolean isCorrect){
 
 
 		VerticalLayout vLayout = new VerticalLayout();
-		Label correct = new Label("Correct!");
+		Label correct = new Label("Correct!  ");
 		correct.addStyleName("success");
 		Label incorrect = new Label("Incorrect!");
 		incorrect.addStyleName("failure");
